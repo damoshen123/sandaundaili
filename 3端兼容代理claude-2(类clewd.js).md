@@ -37,6 +37,116 @@ tips：
 
 New: 
 
+（2023-09-08）添加BingAI ，需要在`.env`文件下配置`BING_TOKEN` cookie值（_U=部分）,`BING_BASE_URL` 转发地址(自行搭建)
+
+（2023-09-02）添加自动删除会话（默认关闭 false）
+
+在`.env`中添加`DELETE_HISTORY=true`标记
+
+```tex
+# 填充文字，默认内置随机
+PILE="我是填充文字"
+# 填充最大阈值, 默认50000
+PILE_SIZE=50000
+# 自行搭建注册接口，或者直接使用claudeai.ai的：https://email.claudeai.ai/claude_api
+REV="https://email.claudeai.ai/claude_api"
+# 自动删除会话
+DELETE_HISTORY=true
+```
+
+
+
+
+
+（2023-09-01）自动刷取token凭证失效，添加临时方案（不保证可用性，也许会抽风）
+
+<span style="color:red">*</span>tips：<span style="color:red">对电脑要求比较高，吃性能</span>, 手机啥的就不要想了
+
+[视频教程](https://www.bilibili.com/video/BV1Sw411S7hZ)
+
+step 1:
+
+电脑需安装docker，自行研究安装。
+
+安装完成后执行命令，可查看是否安装成功
+
+```bash
+docker info
+```
+
+step 2:
+
+同级目录下创建`.env`文件，填写你的电脑ip和vpn （根据个人需要填写，英美地区电脑就不需要填写，留空）。
+
+ip是你本机的ip，不要填写127.0.0.1，不然容器无法识别
+
+```tex
+PROXY="http://[你电脑的ip]:7890"
+```
+
+step 3:
+
+运行镜像：docker compose和 指令二选一
+
+docker compose
+
+```vim
+version: '3'
+services:
+  app:
+    restart: always
+    image: bincooo/claude-helper:v1.0.1
+    volumes:
+     - ./.env:/code/.env
+    environment:
+     - ENABLED_X11VNC=no
+    ports:
+     - 8088:8080
+```
+
+docker command
+
+```bash
+docker run --name claude-helper -p 8088:8080 -v ./.env:/code/.env -d bincooo/claude-helper:v1.0.1
+```
+
+
+
+（2023-08-26）邮箱平台反爬限流修复
+
+（2023-08-24）旧邮箱失效，更新新的邮箱。开盲盒，运气好你能得到新的邮箱，运气不好就是别人玩剩的
+
+（2023-08-23）解决新邮箱不支持ipv6问题
+
+（2023-08-22）旧邮箱失效，更新新的邮箱，添加了国际化，该版本不要遗漏了`lang.toml`文件！！
+
+
+
+（2023-08-18）废料填充， 默认开启。提供自定义废料文本。添加代理自检
+
+```tex
+// 同级目录下的 `.env`文件
+
+# 填充文字，默认内置随机
+PILE="我是填充文字"
+# 填充最大阈值, 默认50000
+PILE_SIZE=50000
+```
+
+（2023-08-16）添加废料填充， 默认开启
+
+食用方法：
+
+在你的预设体内添加如下代码："pile", true 开启，false 关闭
+
+```tex
+schema {
+  "pile": true
+}
+```
+
+
+
 （2023-08-16）旧邮箱不可用，更新新邮箱
 
 ```bash
